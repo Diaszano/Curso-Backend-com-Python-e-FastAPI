@@ -1,19 +1,10 @@
-# 🐍 API do Bot do Telegram
+# 🐍 Curso Backend com Python & FastAPI
 
-## Nesta API iremos ter todos os dados relevantes do Bot do Telegram
+## Neste repositório eu irei aprender uns conceitos de Backend e APIs
 
-### O que usamos na infraestrutura?
+### O que nós utilizaremos?
 
-- [Utilizamos banco de dados MariaDB para o armazenamento dos dados](https://mariadb.com/)
 - [Utilizamos banco de dados SqLite para o backup local dos dados](https://mariadb.com/)
 - [Utilizamos a linguagem Python](https://www.python.org/)
 - [Utilizamos FastAPI](https://fastapi.tiangolo.com/)
-
-### O que já foi implementado?
-
-- [X] Autentificação de Usuários
-- [ ] Armazenamento do Rastreio de encomendas
-- [ ] Armazenamento dos Verificadores
-- [ ] Armazenamento da Hora do Remédio
-
-## [Bot do telegram](https://github.com/Diaszano/botTelegram)
+- [Curso Backend com Python & FastAPI - 2021](https://www.youtube.com/playlist?list=PLuhCJtW2i-wKK9HjfYJI4RIcd9AMIi88k)
