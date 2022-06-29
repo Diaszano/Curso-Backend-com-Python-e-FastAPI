@@ -24,6 +24,9 @@ class Usuario(BaseModel):
     # minhas_vendas: List[Pedido];
     # meus_pedidos : List[Pedido];
 
+    class Config:
+        orm_mode = True;
+
 class Produto(BaseModel):
     """Produto - Schema
     
@@ -55,6 +58,9 @@ class Pedido(BaseModel):
     entrega    : bool = False;
     endereco   : str;
     observacoes: Optional[str] = "Sem observações";
+
+    class Config:
+        orm_mode = True;
 #-----------------------
 # FUNÇÕES()
 #-----------------------
