@@ -1,23 +1,27 @@
-# 🐍 AppAnimal - Sistema de cadastro de Animais domésticos
+# 🐍 AppBLX - Sistema de anúncios e vendas de produtos na vizinhança
 
-## Descrição:
+## Funcionalidades:
 
-Faça uma API para operações de cadastro de animais com os seguintes atributos:
-
-- ID   : Gerado randomicamente.
-- Nome : Texto.
-- Idade: Inteiro.
-- Sexo : Macho ou Fêmea.
-- Cor  : Texto
-
-## Rotas:
-
-- Post  : Animais       -> Deve enviar um objeto animal com todos os dados exceto id.
-- Get   : Animais       -> Deve retornar todos os animais cadastrados.
-- Get   : Animais/{id}  -> Deve retornar o animal com o ID especificado.
-- Delete: Animais/{id}  -> Apaga o animal com o id especificado.
-
-## Dicas:
-
-- Armazene os dados numa List.
-- Use o [Insomnia](https://insomnia.rest/download) para interagir com a sua API.
+- Qualquer pessoa poderá anunciar produtos.
+- Qualquer pessoa poderá fazer pedidos dos produtos anunciados.
+- Uma pessoa tem:
+    - Nome
+    - Telefone whatsapp
+    - senha
+- Um produto tem:
+    - Nome
+    - Detalhes
+    - Preço
+    - Disponível
+    - Fotos
+- Um pedido tem:
+    - Produto
+    - Pessoa que está pedindo
+    - Quantidade
+    - Local de entrega
+    - Observações
+    - Entrega ou Retirada
+- Cada usuário terá uma lista de pedidos recebidos e pedidos feitos.
+- O pedido deverá ser aceito pelo vendedor
+- O comprador poderá acompanhar seus pedidos:
+    - Status (Feito,Aceito)

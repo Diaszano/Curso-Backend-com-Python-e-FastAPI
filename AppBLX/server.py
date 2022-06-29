@@ -1,7 +1,4 @@
-"""Modulo do Server
-
-Neste modulo iremos ter o servidor.
-"""
+"""AppBLX"""
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
