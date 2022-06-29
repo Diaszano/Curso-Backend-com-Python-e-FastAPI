@@ -6,16 +6,10 @@ Neste modulo iremos resolver o exercício proposto.
 # BIBLIOTECAS
 #-----------------------
 from enum import Enum
+from typing import List
 from random import randint
 from fastapi import FastAPI
 from pydantic import BaseModel, validator, constr
-#-----------------------
-# CONSTANTES
-#-----------------------
-app:FastAPI  = FastAPI();
-Animais:list = [];
-MIN_ID:int   = 1;
-MAX_ID:int   = 1000;
 #-----------------------
 # CLASSES
 #-----------------------
@@ -52,6 +46,14 @@ class Animal(BaseModel):
     @validator('sexo')
     def modificar_tipo(cls, sexo) -> str:
         return str(sexo);
+
+#-----------------------
+# CONSTANTES
+#-----------------------
+app:FastAPI  = FastAPI();
+MIN_ID:int   = 1;
+MAX_ID:int   = 1000;
+Animais:List[dict] = [];
 #-----------------------
 # FUNÇÕES()
 #-----------------------
