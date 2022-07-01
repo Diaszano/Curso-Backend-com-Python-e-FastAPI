@@ -7,7 +7,7 @@ from alembic import context
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config
 # Minhas
-from src.infra.sqlalchemy.models.models import *
+from src.infra.sqlalchemy.models import *
 from src.infra.sqlalchemy.config.database import Base
 #-----------------------
 
