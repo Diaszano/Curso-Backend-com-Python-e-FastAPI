@@ -1,8 +1,9 @@
-"""Modulo Models"""
+"""Pedidos"""
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
 from typing import List
+from sqlalchemy import select
 from src.schemas import schemas
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
@@ -13,24 +14,25 @@ from src.infra.sqlalchemy.models import models
 # CLASSES
 #-----------------------
 class RepositorioPedido():
-    def __init__(self, db:Session) -> None:
-        self.db = db;
+    def __init__(self, session:Session) -> None:
+        self.session = session;
     
     def criar(self, pedido: schemas.Pedido) -> models.Pedido:
-        db_pedido = models.Pedido(
-            quantidade=pedido.quantidade,
-            entrega=pedido.entrega,
-            endereco=pedido.endereco,
-            observacoes=pedido.observacoes
+        session_pedido = models.Pedido(
+            quantidade  = pedido.quantidade,
+            entrega     = pedido.entrega,
+            endereco    = pedido.endereco,
+            observacoes = pedido.observacoes
         );
 
-        self.db.add(db_pedido);
-        self.db.commit();
-        self.db.refresh(db_pedido);
-        return db_pedido;
+        self.session.add(session_pedido);
+        self.session.commit();
+        self.session.refresh(session_pedido);
+        return session_pedido;
     
     def listar(self) -> List[models.Pedido]:
-        pedidos = self.db.query(models.Pedido).all();
+        stmt = select(models.Pedido);
+        pedidos = self.session.execute(stmt).scalars().all();
         return pedidos;
     
     def obter(self) -> None:

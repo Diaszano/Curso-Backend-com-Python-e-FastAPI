@@ -26,6 +26,7 @@ class Usuario(Base):
     );
     nome     = Column(String);
     telefone = Column(String, unique=True);
+    senha    = Column(String);
 
     # Ligação com o Produto
     produtos = relationship("Produto",back_populates='usuario');
@@ -72,8 +73,6 @@ class Pedido(Base):
         primary_key=True,
         index=True
     );
-    # usuario     = Column();
-    # produto     = Column();
     quantidade  = Column(Integer);
     entrega     = Column(Boolean);
     endereco    = Column(String);

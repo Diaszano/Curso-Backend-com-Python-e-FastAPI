@@ -1,8 +1,9 @@
-"""Modulo Models"""
+"""Usuários"""
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
 from typing import List
+from sqlalchemy import select
 from src.schemas import schemas
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
@@ -13,22 +14,24 @@ from src.infra.sqlalchemy.models import models
 # CLASSES
 #-----------------------
 class RepositorioUsuario():
-    def __init__(self, db:Session) -> None:
-        self.db = db;
+    def __init__(self, session:Session) -> None:
+        self.session = session;
     
     def criar(self, usuario: schemas.Usuario) -> models.Usuario:
-        db_usuario = models.Usuario(
-            nome=usuario.nome,
-            telefone=usuario.telefone
+        session_usuario = models.Usuario(
+            nome     = usuario.nome,
+            telefone = usuario.telefone,
+            senha    = usuario.senha
         );
 
-        self.db.add(db_usuario);
-        self.db.commit();
-        self.db.refresh(db_usuario);
-        return db_usuario;
+        self.session.add(session_usuario);
+        self.session.commit();
+        self.session.refresh(session_usuario);
+        return session_usuario;
     
     def listar(self) -> List[models.Usuario]:
-        usuarios = self.db.query(models.Usuario).all();
+        stmt = select(models.Usuario);
+        usuarios = self.session.execute(stmt).scalars().all();
         return usuarios;
     
     def obter(self) -> None:

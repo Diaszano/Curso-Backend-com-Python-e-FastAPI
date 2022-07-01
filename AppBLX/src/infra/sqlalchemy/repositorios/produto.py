@@ -1,8 +1,9 @@
-"""Modulo Models"""
+"""Produtos"""
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
 from typing import List
+from sqlalchemy import select
 from src.schemas import schemas
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
@@ -13,27 +14,30 @@ from src.infra.sqlalchemy.models import models
 # CLASSES
 #-----------------------
 class RepositorioProduto():
-    def __init__(self, db:Session) -> None:
-        self.db = db;
+    def __init__(self, session:Session) -> None:
+        self.session = session;
     
     def criar(self, produto: schemas.Produto) -> models.Produto:
-        db_produto = models.Produto(
-            nome=produto.nome,
-            detalhes=produto.detalhes,
-            preco=produto.preco,
-            disponivel=produto.disponivel 
+        session_produto = models.Produto(
+            nome       = produto.nome,
+            detalhes   = produto.detalhes,
+            preco      = produto.preco,
+            disponivel = produto.disponivel,
+            tamanhos   = produto.tamanhos,
+            usuario_id = produto.usuario_id
         );
 
-        self.db.add(db_produto);
-        self.db.commit();
-        self.db.refresh(db_produto);
-        return db_produto;
+        self.session.add(session_produto);
+        self.session.commit();
+        self.session.refresh(session_produto);
+        return session_produto;
     
     def listar(self) -> List[models.Produto]:
-        produtos = self.db.query(models.Produto).all();
+        stmt = select(models.Produto);
+        produtos = self.session.execute(stmt).scalars().all();
         return produtos;
     
-    def obter(self,produto: schemas.Produto) -> None:
+    def obter(self) -> None:
         pass;
     
     def remover(self) -> None:

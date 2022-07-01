@@ -17,12 +17,10 @@ class Usuario(BaseModel):
     necessários para a criação de um usuários 
     no nosso programa.
     """
-    id           : Optional[str] = None;
-    nome         : str;
-    telefone     : str;
-    # meus_produtos: List[Produto];
-    # minhas_vendas: List[Pedido];
-    # meus_pedidos : List[Pedido];
+    id      : Optional[int] = None;
+    nome    : str;
+    telefone: str;
+    senha   : str;
 
     class Config:
         orm_mode = True;
@@ -34,13 +32,14 @@ class Produto(BaseModel):
     necessários para a criação de um produto
     no nosso programa.
     """
-    id        : Optional[str] = None;
-    # usuario   : Usuario;
+    id        : Optional[int] = None;
     nome      : str;
     detalhes  : str;
     preco     : float;
     disponivel: bool = False;
-
+    tamanhos  : Optional[str] = "Não informado";
+    usuario_id: int;
+    
     class Config:
         orm_mode = True;
 
@@ -51,9 +50,7 @@ class Pedido(BaseModel):
     necessários para a criação de um pedido
     no nosso programa.
     """
-    id         : Optional[str] = None;
-    # usuario    : Usuario;
-    # produto    : Produto;
+    id         : Optional[int] = None;
     quantidade : int;
     entrega    : bool = False;
     endereco   : str;
