@@ -3,8 +3,8 @@
 # BIBLIOTECAS
 #-----------------------
 import sys
+from src import schemas
 from typing import List
-from AppBLX.src.schemas import usuario
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends, status
 from src.infra.sqlalchemy.config.database import get_db
@@ -25,7 +25,7 @@ app = FastAPI();
 # Usuário
 @app.get(  "/usuarios",
             status_code=status.HTTP_200_OK,
-            response_model=List[usuario.Usuario]
+            response_model=List[schemas.Usuario]
         )
 def listar_usuarios(session:Session=Depends(get_db)):
     lista_produtos = RepositorioUsuario(session).listar();
@@ -33,16 +33,16 @@ def listar_usuarios(session:Session=Depends(get_db)):
 
 @app.post(  "/usuarios",
             status_code=status.HTTP_201_CREATED,
-            response_model=usuario.Usuario
+            response_model=schemas.Usuario
         )
-def criar_usuarios(produto:usuario.Usuario,session:Session=Depends(get_db)):
+def criar_usuarios(produto:schemas.Usuario,session:Session=Depends(get_db)):
     produto_criado = RepositorioUsuario(session).criar(produto);
     return produto_criado;
 
 # Produto
 @app.get(   "/produtos",
             status_code=status.HTTP_200_OK,
-            response_model=List[usuario.Produto]
+            response_model=List[schemas.Produto]
         )
 def listar_produtos(session:Session=Depends(get_db)):
     lista_produtos = RepositorioProduto(session).listar();
@@ -50,16 +50,16 @@ def listar_produtos(session:Session=Depends(get_db)):
 
 @app.post(  "/produtos",
             status_code=status.HTTP_201_CREATED,
-            response_model=usuario.Produto
+            response_model=schemas.Produto
         )
-def criar_produto(produto:usuario.Produto,session:Session=Depends(get_db)):
+def criar_produto(produto:schemas.Produto,session:Session=Depends(get_db)):
     produto_criado = RepositorioProduto(session).criar(produto);
     return produto_criado;
 
 # Pedido
 @app.get(   "/pedidos",
             status_code=status.HTTP_200_OK,
-            response_model=List[usuario.Usuario]
+            response_model=List[schemas.Pedido]
         )
 def listar_pedidos(session:Session=Depends(get_db)):
     lista_produtos = RepositorioPedido(session).listar();
@@ -67,9 +67,9 @@ def listar_pedidos(session:Session=Depends(get_db)):
 
 @app.post(  "/pedidos",
             status_code=status.HTTP_201_CREATED,
-            response_model=List[usuario.Usuario]
+            response_model=List[schemas.Pedido]
         )
-def criar_pedidos(produto:usuario.Pedido,session:Session=Depends(get_db)):
+def criar_pedidos(produto:schemas.Pedido,session:Session=Depends(get_db)):
     produto_criado = RepositorioPedido(session).criar(produto);
     return produto_criado;
 #-----------------------

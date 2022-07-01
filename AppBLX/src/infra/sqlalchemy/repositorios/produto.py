@@ -37,7 +37,7 @@ class RepositorioProduto():
         produtos = self.session.execute(stmt).scalars().all();
         return produtos;
     
-    def obter(self) -> None:
+    def editar(self) -> None:
         pass;
     
     def remover(self) -> None:
