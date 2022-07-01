@@ -12,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # Remover __pycache__
 #-----------------------
 sys.dont_write_bytecode = True;
+# sys.dont_write_bytecode = False;
 #-----------------------
 # FastApi
 #-----------------------
