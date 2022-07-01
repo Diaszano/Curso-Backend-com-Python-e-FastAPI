@@ -15,7 +15,7 @@ from src.schemas.produto import Produto
 class Pedido(BaseModel):
     """Pedido - Schema
     
-    Neste modelo nós criamos todos os dados 
+    Neste schema nós criamos todos os dados 
     necessários para a criação de um pedido
     no nosso programa.
     """

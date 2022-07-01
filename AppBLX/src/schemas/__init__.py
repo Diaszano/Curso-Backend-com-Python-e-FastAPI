@@ -1,7 +1,7 @@
 """Módulo Schemas
 
-Neste módulo iremos ter todos os relacionamentos
-com a api.
+Neste módulo iremos ter todos os schemas
+que lidam com a api.
 """
 #-----------------------
 # BIBLIOTECAS

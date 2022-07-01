@@ -15,7 +15,7 @@ from src.schemas.produto import Produto
 class Usuario(BaseModel):
     """Usuário - Schema
     
-    Neste modelo nós criamos todos os dados 
+    Neste schema nós criamos todos os dados 
     necessários para a criação de um usuários 
     no nosso programa.
     """
