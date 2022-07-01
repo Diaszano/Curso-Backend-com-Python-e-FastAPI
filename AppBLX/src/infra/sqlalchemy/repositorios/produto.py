@@ -2,11 +2,11 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
+from src import schemas
 from typing import List
 from sqlalchemy import select
-from src.schemas import usuario
 from sqlalchemy.orm import Session
-from src.infra.sqlalchemy.models import usuario
+from src.infra.sqlalchemy import models
 #-----------------------
 # CONSTANTES
 #-----------------------
@@ -17,8 +17,8 @@ class RepositorioProduto():
     def __init__(self, session:Session) -> None:
         self.session = session;
     
-    def criar(self, produto: usuario.Produto) -> usuario.Produto:
-        session_produto = usuario.Produto(
+    def criar(self, produto: schemas.Produto) -> models.Produto:
+        session_produto = models.Produto(
             nome       = produto.nome,
             detalhes   = produto.detalhes,
             preco      = produto.preco,
@@ -32,8 +32,8 @@ class RepositorioProduto():
         self.session.refresh(session_produto);
         return session_produto;
     
-    def listar(self) -> List[usuario.Produto]:
-        stmt = select(usuario.Produto);
+    def listar(self) -> List[models.Produto]:
+        stmt = select(models.Produto);
         produtos = self.session.execute(stmt).scalars().all();
         return produtos;
     
