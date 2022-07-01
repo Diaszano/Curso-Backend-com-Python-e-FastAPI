@@ -2,8 +2,8 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
-from sqlalchemy import Boolean, Column, Float, Integer,String
 from src.infra.sqlalchemy.config.database import Base
+from sqlalchemy import Boolean, Column, Float, Integer,String
 #-----------------------
 # CONSTANTES
 #-----------------------

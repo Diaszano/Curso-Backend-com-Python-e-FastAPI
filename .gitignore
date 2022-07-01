@@ -1,6 +1,6 @@
 # https://github.com/github/gitignore/blob/main/Python.gitignore
 
-# Minha Pasta de senhas
+# Minhas coisas
 *.db
 .vscode
 

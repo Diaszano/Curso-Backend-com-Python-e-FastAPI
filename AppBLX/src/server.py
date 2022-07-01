@@ -2,9 +2,10 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
-from fastapi import FastAPI, Depends
+import sys
 from src.schemas import schemas
 from sqlalchemy.orm import Session
+from fastapi import FastAPI, Depends
 from src.infra.sqlalchemy.config.database import get_db, criar_db
 from src.infra.sqlalchemy.repositorios.pedido import RepositorioPedido
 from src.infra.sqlalchemy.repositorios.usuario import RepositorioUsuario
@@ -12,6 +13,7 @@ from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
 #-----------------------
 # CONSTANTES/GLOBAIS
 #-----------------------
+sys.dont_write_bytecode = True;
 app = FastAPI();
 criar_db();
 #-----------------------

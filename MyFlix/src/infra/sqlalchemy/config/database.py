@@ -8,7 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 #-----------------------
 # CONSTANTES - GLOBAIS
 #-----------------------
-NOME_DATABASE = "app_blx";
+NOME_DATABASE = "app_myflix";
 
 SQLALCHEMY_DATABASE_URL:str = (
     f"sqlite:///./{NOME_DATABASE}.db"
