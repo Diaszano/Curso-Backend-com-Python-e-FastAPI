@@ -15,7 +15,6 @@ from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
 #-----------------------
 sys.dont_write_bytecode = True;
 app = FastAPI();
-criar_db();
 #-----------------------
 # CLASSES
 #-----------------------

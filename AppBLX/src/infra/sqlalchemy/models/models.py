@@ -2,8 +2,10 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
+from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, Float
+from sqlalchemy import ForeignKey, Integer,String
 from src.infra.sqlalchemy.config.database import Base
-from sqlalchemy import Boolean, Column, Float, Integer,String
 #-----------------------
 # CONSTANTES
 #-----------------------
@@ -25,6 +27,11 @@ class Usuario(Base):
     nome     = Column(String);
     telefone = Column(String, unique=True);
 
+    # Ligação com o Produto
+    produtos = relationship("Produto",back_populates='usuario');
+    # Ligação com o Pedido
+    # pedidos = relationship("Produto",back_populates='usuario');
+
 class Produto(Base):
     """Usuario - Models
     
@@ -41,6 +48,17 @@ class Produto(Base):
     detalhes   = Column(String);
     preco      = Column(Float);
     disponivel = Column(Boolean);
+    tamanhos   = Column(String);
+    
+    # Ligação com o Usuário
+    usuario_id = Column(
+        Integer, 
+        ForeignKey(
+            "usuario.id", 
+            name="fk_usuario"
+        )
+    );
+    usuario    = relationship("Usuario",back_populates="produtos");
 
 class Pedido(Base):
     """Pedido - Models
