@@ -24,9 +24,9 @@ class Pedido(BaseModel):
     entrega    : bool = False;
     endereco   : str;
     observacoes: Optional[str] = "Sem observações";
-    usuario_id : int;
+    usuario_id : Optional[int] = None;
     usuario    : Optional[Usuario] = None;
-    produto_id : int;
+    produto_id : Optional[int] = None;
     produto    : Optional[Produto] = None;
 
     class Config:

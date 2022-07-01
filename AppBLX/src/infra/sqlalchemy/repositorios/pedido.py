@@ -4,9 +4,9 @@
 #-----------------------
 from src import schemas
 from typing import List
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy import models
+from sqlalchemy import select, update, delete
 #-----------------------
 # CONSTANTES
 #-----------------------
@@ -22,7 +22,9 @@ class RepositorioPedido():
             quantidade  = pedido.quantidade,
             entrega     = pedido.entrega,
             endereco    = pedido.endereco,
-            observacoes = pedido.observacoes
+            observacoes = pedido.observacoes,
+            usuario_id  = pedido.usuario_id,
+            produto_id  = pedido.produto_id
         );
 
         self.session.add(session_pedido);
@@ -35,11 +37,24 @@ class RepositorioPedido():
         pedidos = self.session.execute(stmt).scalars().all();
         return pedidos;
     
-    def obter(self) -> None:
-        pass;
+    def editar(self,id:int,pedido:schemas.Pedido) -> None:
+        stmt = update(models.Pedido).where(
+            models.Pedido.id==id
+        ).values(
+            quantidade  = pedido.quantidade,
+            entrega     = pedido.entrega,
+            endereco    = pedido.endereco,
+            observacoes = pedido.observacoes
+        );
+        self.session.execute(stmt);
+        self.session.commit();
     
-    def remover(self) -> None:
-        pass;
+    def remover(self,id:int) -> None:
+        stmt = delete(models.Pedido).where(
+            models.Pedido.id==id
+        )
+        self.session.execute(stmt);
+        self.session.commit();
 #-----------------------
 # FUNÇÕES()
 #-----------------------

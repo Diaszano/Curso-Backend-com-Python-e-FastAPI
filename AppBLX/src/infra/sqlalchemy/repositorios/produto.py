@@ -4,9 +4,9 @@
 #-----------------------
 from src import schemas
 from typing import List
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy import models
+from sqlalchemy import select, update, delete
 #-----------------------
 # CONSTANTES
 #-----------------------
@@ -37,11 +37,25 @@ class RepositorioProduto():
         produtos = self.session.execute(stmt).scalars().all();
         return produtos;
     
-    def editar(self) -> None:
-        pass;
+    def editar(self,id:int,produto:schemas.Produto) -> None:
+        stmt = update(models.Produto).where(
+            models.Produto.id==id
+        ).values(
+            nome       = produto.nome,
+            detalhes   = produto.detalhes,
+            preco      = produto.preco,
+            disponivel = produto.disponivel,
+            tamanhos   = produto.tamanhos
+        );
+        self.session.execute(stmt);
+        self.session.commit();
     
-    def remover(self) -> None:
-        pass;
+    def remover(self,id:int) -> None:
+        stmt = delete(models.Produto).where(
+            models.Produto.id==id
+        )
+        self.session.execute(stmt);
+        self.session.commit();
 #-----------------------
 # FUNÇÕES()
 #-----------------------

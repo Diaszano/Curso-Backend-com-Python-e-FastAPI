@@ -24,7 +24,7 @@ class Produto(BaseModel):
     preco     : float;
     disponivel: bool = False;
     tamanhos  : Optional[str] = "Não informado";
-    usuario_id: int;
+    usuario_id: Optional[int] = None;
     usuario   : Optional[Usuario] = None;
     
     class Config:
