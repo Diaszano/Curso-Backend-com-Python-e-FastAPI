@@ -56,6 +56,14 @@ def criar_produto(produto:schemas.Produto,session:Session=Depends(get_db)):
     produto_criado = RepositorioProduto(session).criar(produto);
     return produto_criado;
 
+@app.put(  "/produtos/{id}",
+            status_code=status.HTTP_200_OK,
+            response_model=schemas.ProdutoSimples
+        )
+def criar_produto(id:int,produto:schemas.Produto,session:Session=Depends(get_db)):
+    RepositorioProduto(session).editar(id,produto);
+    return produto;
+
 # Pedido
 @app.get(   "/pedidos",
             status_code=status.HTTP_200_OK,
