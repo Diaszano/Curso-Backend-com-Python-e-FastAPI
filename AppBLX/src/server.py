@@ -3,8 +3,8 @@
 # BIBLIOTECAS
 #-----------------------
 import sys
-from src import schemas
 from typing import List
+from src.schemas import schemas
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends, status
 from src.infra.sqlalchemy.config.database import get_db

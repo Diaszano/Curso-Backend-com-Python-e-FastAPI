@@ -2,8 +2,8 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
-from src import schemas
 from typing import List
+from src.schemas import schemas
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy import models
 from sqlalchemy import select, update, delete
