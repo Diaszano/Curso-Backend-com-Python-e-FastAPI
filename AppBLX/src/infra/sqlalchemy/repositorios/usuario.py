@@ -4,7 +4,7 @@
 #-----------------------
 from typing import List
 from sqlalchemy import select
-from src.schemas import schemas
+from AppBLX.src.schemas import usuario
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
 #-----------------------
@@ -17,7 +17,7 @@ class RepositorioUsuario():
     def __init__(self, session:Session) -> None:
         self.session = session;
     
-    def criar(self, usuario: schemas.Usuario) -> models.Usuario:
+    def criar(self, usuario: usuario.Usuario) -> models.Usuario:
         session_usuario = models.Usuario(
             nome     = usuario.nome,
             telefone = usuario.telefone,

@@ -4,7 +4,7 @@
 #-----------------------
 from typing import List
 from sqlalchemy import select
-from src.schemas import schemas
+from AppBLX.src.schemas import usuario
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy.models import models
 #-----------------------
@@ -17,7 +17,7 @@ class RepositorioProduto():
     def __init__(self, session:Session) -> None:
         self.session = session;
     
-    def criar(self, produto: schemas.Produto) -> models.Produto:
+    def criar(self, produto: usuario.Produto) -> models.Produto:
         session_produto = models.Produto(
             nome       = produto.nome,
             detalhes   = produto.detalhes,
