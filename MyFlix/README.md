@@ -1,6 +1,8 @@
 # 🐍 MyFlix - App para cadastro de séries do Netflix
 
 > Série (titulo, ano, gênero, quantidade de temporadas)
+> 
+> Filme (titulo, ano, gênero, quantidade de temporadas)
 
 ## Funcionalidades:
 
