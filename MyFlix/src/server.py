@@ -26,7 +26,7 @@ class Titulo(BaseModel):
 #-----------------------
 # Série
 @app.post("/series",status_code=201)
-def criar_serie(serie:schemas.Serie,db:Session=Depends(get_db)) -> dict:
+def criar_serie(serie:schemas.Serie,db:Session=Depends(get_db)) -> schemas.Serie:
     retorno = RepositorioSerie(db).criar(serie);
     return retorno;
 
