@@ -67,7 +67,7 @@ def listar_pedidos(session:Session=Depends(get_db)):
 
 @app.post(  "/pedidos",
             status_code=status.HTTP_201_CREATED,
-            response_model=List[schemas.Pedido]
+            response_model=schemas.Pedido
         )
 def criar_pedidos(produto:schemas.Pedido,session:Session=Depends(get_db)):
     produto_criado = RepositorioPedido(session).criar(produto);

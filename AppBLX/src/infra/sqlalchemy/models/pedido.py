@@ -45,7 +45,6 @@ class Pedido(Base):
     # );
 
     # Ligação com o Usuário
-
     usuario_id = Column(
         Integer, 
         ForeignKey(

@@ -108,7 +108,7 @@ class Pedido(BaseModel):
     usuario_id : Optional[int] = None;
     usuario    : Optional[UsuarioSimples] = None;
     produto_id : Optional[int] = None;
-    produto    : Optional[ProdutoSimples] = None;
+    produto    : Optional[Produto] = None;
 
     class Config:
         orm_mode = True;
