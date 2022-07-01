@@ -28,7 +28,7 @@ def listar_usuarios(db:Session=Depends(get_db)):
     lista_produtos = RepositorioUsuario(db).listar();
     return lista_produtos;
 
-@app.post("/usuarios")
+@app.post("/usuarios",status_code=201)
 def criar_usuarios(produto:schemas.Usuario,db:Session=Depends(get_db)):
     produto_criado = RepositorioUsuario(db).criar(produto);
     return produto_criado;
@@ -39,7 +39,7 @@ def listar_produtos(db:Session=Depends(get_db)):
     lista_produtos = RepositorioProduto(db).listar();
     return lista_produtos;
 
-@app.post("/produtos")
+@app.post("/produtos",status_code=201)
 def criar_produto(produto:schemas.Produto,db:Session=Depends(get_db)):
     produto_criado = RepositorioProduto(db).criar(produto);
     return produto_criado;
@@ -50,7 +50,7 @@ def listar_pedidos(db:Session=Depends(get_db)):
     lista_produtos = RepositorioPedido(db).listar();
     return lista_produtos;
 
-@app.post("/pedidos")
+@app.post("/pedidos",status_code=201)
 def criar_pedidos(produto:schemas.Pedido,db:Session=Depends(get_db)):
     produto_criado = RepositorioPedido(db).criar(produto);
     return produto_criado;

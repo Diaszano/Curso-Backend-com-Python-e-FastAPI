@@ -57,7 +57,7 @@ Animais:List[dict] = [];
 #-----------------------
 # FUNÇÕES()
 #-----------------------
-@app.post("/animais")
+@app.post("/animais",status_code=201)
 async def insert(animal:Animal) -> dict:
     """Insert - Método Post
     

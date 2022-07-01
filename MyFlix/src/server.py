@@ -25,7 +25,7 @@ class Titulo(BaseModel):
 # FUNÇÕES()
 #-----------------------
 # Série
-@app.post("/series")
+@app.post("/series",status_code=201)
 def criar_serie(serie:schemas.Serie,db:Session=Depends(get_db)) -> dict:
     retorno = RepositorioSerie(db).criar(serie);
     return retorno;
@@ -52,7 +52,7 @@ def pegar_serie(id:int,db:Session=Depends(get_db)) -> dict:
     return {"msg":"Removido com sucesso"};
 
 # Filme
-@app.post("/filmes")
+@app.post("/filmes",status_code=201)
 def criar_filme(filme:schemas.Filme,db:Session=Depends(get_db)) -> dict:
     retorno = RepositorioFilme(db).criar(filme);
     return retorno;
