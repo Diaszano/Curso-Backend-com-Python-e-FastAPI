@@ -17,7 +17,7 @@ class RepositorioProduto():
     def __init__(self, session:Session) -> None:
         self.session = session;
 
-    def verificar_id(self,id:int) -> bool:
+    def verificarId(self,id:int) -> bool:
         stmt = select(models.Produto).where(
             models.Produto.id==id
         );

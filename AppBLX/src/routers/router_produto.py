@@ -43,6 +43,12 @@ async def criar_produto(produto:schemas.Produto,session:Session=Depends(get_db))
             tags=[NOME_TAG]
         )
 async def editar_produto(id:int,produto:schemas.Produto,session:Session=Depends(get_db)):
+    verificar = RepositorioProduto(session).verificarId(id);
+    if(verificar):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Item com id={id} inexistente!"
+        );
     RepositorioProduto(session).editar(id,produto);
     return produto;
 
@@ -52,12 +58,13 @@ async def editar_produto(id:int,produto:schemas.Produto,session:Session=Depends(
             tags=[NOME_TAG]
         )
 async def exibir_produto(id:int,session:Session=Depends(get_db)):
-    retorno = RepositorioProduto(session).buscarPorId(id);
-    if(not retorno):
+    verificar = RepositorioProduto(session).verificarId(id);
+    if(verificar):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Item com id={id} inexistente!"
         );
+    retorno = RepositorioProduto(session).buscarPorId(id);
     return retorno;
 #-----------------------
 # Main()

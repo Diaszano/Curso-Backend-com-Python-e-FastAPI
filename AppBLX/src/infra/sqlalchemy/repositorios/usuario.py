@@ -26,7 +26,7 @@ class RepositorioUsuario():
             return False;
         return True;
     
-    def verificar_id(self,id:int) -> bool:
+    def verificarId(self,id:int) -> bool:
         stmt = select(models.Usuario).where(
             models.Usuario.id==id
         );
