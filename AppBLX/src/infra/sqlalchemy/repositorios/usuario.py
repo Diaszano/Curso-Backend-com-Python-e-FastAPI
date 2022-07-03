@@ -6,7 +6,7 @@ from typing import List
 from src.schemas import schemas
 from sqlalchemy.orm import Session
 from src.infra.sqlalchemy import models
-from sqlalchemy import select, update, delete
+from sqlalchemy import select, update, delete, insert
 #-----------------------
 # CONSTANTES
 #-----------------------
@@ -17,17 +17,32 @@ class RepositorioUsuario():
     def __init__(self, session:Session) -> None:
         self.session = session;
     
-    def criar(self, usuario: schemas.Usuario) -> models.Usuario:
-        session_usuario = models.Usuario(
+    def verificar_telefone(self,telefone:str) -> bool:
+        stmt = select(models.Usuario).where(
+            models.Usuario.telefone==telefone
+        );
+        retorno  = self.session.execute(stmt).first();
+        if(not retorno):
+            return False;
+        return True;
+    
+    def verificar_id(self,id:int) -> bool:
+        stmt = select(models.Usuario).where(
+            models.Usuario.id==id
+        );
+        retorno  = self.session.execute(stmt).first();
+        if(not retorno):
+            return False;
+        return True;
+
+    def criar(self, usuario: schemas.Usuario) -> None:
+        stmt = insert(models.Usuario).values(
             nome     = usuario.nome,
             telefone = usuario.telefone,
             senha    = usuario.senha
         );
-
-        self.session.add(session_usuario);
+        self.session.execute(stmt);
         self.session.commit();
-        self.session.refresh(session_usuario);
-        return session_usuario;
     
     def listar(self) -> List[models.Usuario]:
         stmt = select(models.Usuario);

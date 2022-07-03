@@ -50,6 +50,13 @@ class RepositorioProduto():
         self.session.execute(stmt);
         self.session.commit();
     
+    def buscarPorId(self,id:int) -> models.Produto:
+        stmt = select(models.Produto).where(
+            models.Produto.id==id
+        );
+        produto = self.session.execute(stmt).first();
+        return produto;
+    
     def remover(self,id:int) -> None:
         stmt = delete(models.Produto).where(
             models.Produto.id==id
