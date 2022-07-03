@@ -17,6 +17,15 @@ class RepositorioPedido():
     def __init__(self, session:Session) -> None:
         self.session = session;
     
+    def verificar_id(self,id:int) -> bool:
+        stmt = select(models.Pedido).where(
+            models.Pedido.id==id
+        );
+        retorno  = self.session.execute(stmt).first();
+        if(not retorno):
+            return False;
+        return True;
+
     def criar(self, pedido: schemas.Pedido) -> models.Pedido:
         session_pedido = models.Pedido(
             quantidade  = pedido.quantidade,

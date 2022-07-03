@@ -16,6 +16,15 @@ from sqlalchemy import select, update, delete
 class RepositorioProduto():
     def __init__(self, session:Session) -> None:
         self.session = session;
+
+    def verificar_id(self,id:int) -> bool:
+        stmt = select(models.Produto).where(
+            models.Produto.id==id
+        );
+        retorno  = self.session.execute(stmt).first();
+        if(not retorno):
+            return False;
+        return True;
     
     def criar(self, produto: schemas.Produto) -> models.Produto:
         session_produto = models.Produto(
