@@ -10,6 +10,9 @@ from typing import Optional, List
 #-----------------------
 # CLASSES
 #-----------------------
+# **************
+# Schema Simples
+# **************
 class UsuarioSimples(BaseModel):
     """Usuário Simples - Schema
     
@@ -56,7 +59,9 @@ class PedidoSimples(BaseModel):
 
     class Config:
         orm_mode = True;
-
+# **************
+# Schema Completo
+# **************
 class Usuario(BaseModel):
     """Usuário - Schema
     
@@ -112,6 +117,27 @@ class Pedido(BaseModel):
 
     class Config:
         orm_mode = True;
+# **************
+# Schema Login
+# **************
+class LoginData(BaseModel):
+    """Login - Schema
+    
+    Neste schema nós criamos todos os dados 
+    necessários para o login
+    no nosso programa.
+    """
+    senha   : str;
+    telefone: str;
+
+class LoginSucesso(BaseModel):
+    """Token do Usuário - Schema
+    
+    Neste schema nós colocaremos o 
+    token de acesso do usuário.
+    """
+    usuario     : UsuarioSimples;
+    access_token: str;
 #-----------------------
 # FUNÇÕES()
 #-----------------------

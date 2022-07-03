@@ -14,3 +14,9 @@ python_version = "3.8"
 
 [packages.fastapi]
 extras = [ "all",]
+
+[packages.python-jose]
+extras = [ "cryptography",]
+
+[packages.passlib]
+extras = [ "bcrypt",]

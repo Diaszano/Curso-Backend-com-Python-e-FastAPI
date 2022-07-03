@@ -2,17 +2,11 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
-import sys
 from fastapi import FastAPI
 from src.routers import router_pedido
 from src.routers import router_produto
-from src.routers import router_usuario
+from src.routers import router_auth
 from fastapi.middleware.cors import CORSMiddleware
-#-----------------------
-# Remover __pycache__
-#-----------------------
-sys.dont_write_bytecode = True;
-# sys.dont_write_bytecode = False;
 #-----------------------
 # FastApi
 #-----------------------
@@ -37,5 +31,5 @@ app.add_middleware(
 #-----------------------
 app.include_router(router_pedido.router);
 app.include_router(router_produto.router);
-app.include_router(router_usuario.router);
+app.include_router(router_auth.router,prefix="/auth");
 #-----------------------

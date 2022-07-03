@@ -16,25 +16,9 @@ from sqlalchemy import select, update, delete, insert
 class RepositorioUsuario():
     def __init__(self, session:Session) -> None:
         self.session = session;
-    
-    def verificar_telefone(self,telefone:str) -> bool:
-        stmt = select(models.Usuario).where(
-            models.Usuario.telefone==telefone
-        );
-        retorno  = self.session.execute(stmt).first();
-        if(not retorno):
-            return False;
-        return True;
-    
-    def verificarId(self,id:int) -> bool:
-        stmt = select(models.Usuario).where(
-            models.Usuario.id==id
-        );
-        retorno  = self.session.execute(stmt).first();
-        if(not retorno):
-            return False;
-        return True;
-
+    # **************
+    # CRUD
+    # **************
     def criar(self, usuario: schemas.Usuario) -> None:
         stmt = insert(models.Usuario).values(
             nome     = usuario.nome,
@@ -66,6 +50,15 @@ class RepositorioUsuario():
         )
         self.session.execute(stmt);
         self.session.commit();
+    # **************
+    # Outros
+    # **************
+    def obter_pelo_telefone(self,telefone:str) -> models.Usuario:
+        stmt = select(models.Usuario).where(
+            models.Usuario.telefone == telefone
+        );
+        retorno =  self.session.execute(stmt).scalars().first();
+        return retorno;
 #-----------------------
 # FUNÇÕES()
 #-----------------------
