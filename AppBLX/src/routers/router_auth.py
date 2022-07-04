@@ -27,7 +27,9 @@ NOME_TAG = "Auth";
                 response_model=schemas.UsuarioSimples,
                 tags=[NOME_TAG]
             )
-async def signup(usuario:schemas.Usuario,session:Session=Depends(get_db)):
+async def signup(   usuario:schemas.Usuario,
+                    session:Session=Depends(get_db)):
+    
     verificar = RepositorioUsuario(session).obter_pelo_telefone(
         usuario.telefone
     );
@@ -49,7 +51,9 @@ async def signup(usuario:schemas.Usuario,session:Session=Depends(get_db)):
                 response_model=schemas.LoginSucesso,
                 tags=[NOME_TAG]
             )
-async def login(login_data:schemas.LoginData,session:Session=Depends(get_db)):
+async def login(login_data:schemas.LoginData,
+                session:Session=Depends(get_db)):
+    
     senha    = login_data.senha;
     telefone = login_data.telefone;
 

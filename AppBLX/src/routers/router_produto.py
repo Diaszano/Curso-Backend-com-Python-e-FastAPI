@@ -20,7 +20,7 @@ NOME_TAG = "Produtos";
 #-----------------------
 # FUNÇÕES()
 #-----------------------
-@router.get(   "/",
+@router.get(   "/listar",
                 status_code=status.HTTP_200_OK,
                 response_model=List[schemas.ProdutoSimples],
                 tags=[NOME_TAG])
@@ -32,7 +32,7 @@ async def listar_produtos(  session:Session=Depends(get_db),
     lista_produtos = RepositorioProduto(session).listar(usuario.id);
     return lista_produtos;
 
-@router.post(  "/",
+@router.post(  "/inserir",
                 status_code=status.HTTP_201_CREATED,
                 response_model=schemas.ProdutoRetorno,
                 tags=[NOME_TAG])
@@ -47,7 +47,7 @@ async def criar_produto(produto:schemas.ProdutoSimples,
     );
     return produto;
 
-@router.put(  "/{id}",
+@router.put(  "/editar/{id}",
             status_code=status.HTTP_200_OK,
             response_model=schemas.ProdutoRetorno,
             tags=[NOME_TAG]
@@ -76,7 +76,7 @@ async def editar_produto(   id:int,produto:schemas.Produto,
     
     return produto;
 
-@router.get(   "/{id}",
+@router.get(   "/pegar/{id}",
             status_code=status.HTTP_200_OK,
             response_model=schemas.ProdutoRetorno,
             tags=[NOME_TAG]
@@ -97,7 +97,7 @@ async def exibir_produto(   id:int,session:Session=Depends(get_db),
         );
     return retorno;
 
-@router.delete(   "/{id}",
+@router.delete(   "/remover/{id}",
             status_code=status.HTTP_200_OK,
             response_model=schemas.ProdutoRetorno,
             tags=[NOME_TAG]
