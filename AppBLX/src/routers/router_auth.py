@@ -14,7 +14,7 @@ from src.infra.sqlalchemy.repositorios.usuario import RepositorioUsuario
 #-----------------------
 # CONSTANTES
 #-----------------------
-router = APIRouter();
+router   = APIRouter();
 NOME_TAG = "Auth";
 #-----------------------
 # CLASSES
@@ -25,8 +25,7 @@ NOME_TAG = "Auth";
 @router.post(  "/signup",
                 status_code=status.HTTP_201_CREATED,
                 response_model=schemas.UsuarioSimples,
-                tags=[NOME_TAG]
-            )
+                tags=[NOME_TAG])
 async def signup(   usuario:schemas.Usuario,
                     session:Session=Depends(get_db)):
     
@@ -42,15 +41,14 @@ async def signup(   usuario:schemas.Usuario,
     
     usuario.senha = hash_provider.gerar_hash(usuario.senha);
 
-    RepositorioUsuario(session).criar(usuario);
+    retorno = RepositorioUsuario(session).criarRetorno(usuario);
 
-    return usuario;
+    return retorno;
 
 @router.post(  "/token",
                 status_code=status.HTTP_200_OK,
                 response_model=schemas.LoginSucesso,
-                tags=[NOME_TAG]
-            )
+                tags=[NOME_TAG])
 async def login(login_data:schemas.LoginData,
                 session:Session=Depends(get_db)):
     
@@ -58,33 +56,37 @@ async def login(login_data:schemas.LoginData,
     telefone = login_data.telefone;
 
     usuario = RepositorioUsuario(session).obter_pelo_telefone(telefone);
+    
     if(not usuario):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Não existe usuário com o telefone {telefone}"
         );
+    
     verificar_senha = hash_provider.verificar_hash(
         senha,
         usuario.senha
     );
+    
     if(not verificar_senha):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Senha incorreta"
         );
+        
     dicionario = {"sub": usuario.telefone};
     token = create_access_token(dicionario);
     retorno = {
         "usuario":usuario,
         "access_token":token
     };
+    
     return retorno;
 
-@router.get(  "/me",
-                status_code=status.HTTP_200_OK,
-                response_model=schemas.UsuarioSimples,
-                tags=[NOME_TAG]
-            )
+@router.get("/me",
+            status_code=status.HTTP_200_OK,
+            response_model=schemas.UsuarioSimples,
+            tags=[NOME_TAG])
 def me(usuario:schemas.Usuario=Depends(obter_usuario_logado)):
     return usuario;
 #-----------------------

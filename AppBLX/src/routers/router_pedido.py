@@ -12,7 +12,7 @@ from src.infra.sqlalchemy.repositorios.pedido import RepositorioPedido
 #-----------------------
 # CONSTANTES
 #-----------------------
-router = APIRouter();
+router   = APIRouter();
 NOME_TAG = "Pedidos";
 #-----------------------
 # CLASSES
@@ -29,20 +29,21 @@ async def listar_meus_pedidos(  session:Session=Depends(get_db),
                                 obter_usuario_logado)):
     
     lista_pedidos = RepositorioPedido(session).listarPedidos(
-        usuario.id
+        idUser=usuario.id
     );
+    
     return lista_pedidos;
 
 @router.get("/vendas",
             status_code=status.HTTP_200_OK,
-            response_model=List[schemas.PedidoRetorno],
+            response_model=List[schemas.PedidoSimples],
             tags=[NOME_TAG])
 async def listar_minhas_vendas( session:Session=Depends(get_db),
                                 usuario:schemas.Usuario=Depends(
                                 obter_usuario_logado)):
     
     lista_pedidos = RepositorioPedido(session).listarVendas(
-        id=usuario.id
+        idUser=usuario.id
     );
     return lista_pedidos;
 
@@ -90,14 +91,14 @@ async def pegar_venda(  id:int,session:Session=Depends(get_db),
 
 @router.post(  "/inserir",
                 status_code=status.HTTP_201_CREATED,
-                response_model=schemas.PedidoSimples,
+                response_model=schemas.PedidoRetorno,
                 tags=[NOME_TAG])
 async def fazer_pedido( pedido:schemas.Pedido,
                         session:Session=Depends(get_db),
                         usuario:schemas.Usuario=Depends(
                         obter_usuario_logado)):
     
-    pedido_criado = RepositorioPedido(session).criar(
+    pedido_criado = RepositorioPedido(session).criarRetorno(
         pedido=pedido,
         idUser=usuario.id
     );

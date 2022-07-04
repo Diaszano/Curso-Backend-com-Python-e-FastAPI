@@ -17,35 +17,45 @@ class RepositorioProduto():
     def __init__(self, session:Session) -> None:
         self.session = session;
 
-    def verificarId(self,id:int) -> bool:
-        stmt = select(models.Produto).where(
-            models.Produto.id==id
+    def criarRetorno(   self,idUser:int,
+                        produto: schemas.Produto) -> models.Produto:
+        
+        session_produto = models.Produto(
+            nome       = produto.nome,
+            detalhes   = produto.detalhes,
+            preco      = produto.preco,
+            disponivel = produto.disponivel,
+            tamanhos   = produto.tamanhos,
+            usuario_id = idUser
         );
-        retorno  = self.session.execute(stmt).first();
-        if(not retorno):
-            return False;
-        return True;
-    
-    def criar(self,id:int, produto: schemas.Produto) -> None:
+        
+        self.session.add(session_produto);
+        self.session.commit();
+        self.session.refresh(session_produto);
+        return session_produto;
+
+    def criar(self,idUser:int,produto: schemas.Produto) -> None:
         stmt = insert(models.Produto).values(
             nome       = produto.nome,
             detalhes   = produto.detalhes,
             preco      = produto.preco,
             disponivel = produto.disponivel,
             tamanhos   = produto.tamanhos,
-            usuario_id = id
+            usuario_id = idUser
         );
         self.session.execute(stmt);
         self.session.commit();
     
-    def listar(self,id:int) -> List[models.Produto]:
+    def listar(self,idUser:int) -> List[models.Produto]:
         stmt = select(models.Produto).where(
-            models.Produto.usuario_id==id
+            models.Produto.usuario_id==idUser
         );
         produtos = self.session.execute(stmt).scalars().all();
         return produtos;
     
-    def editar(self,idUser:int,idProduto:int,produto:schemas.Produto) -> None:
+    def editar( self,idUser:int,idProduto:int,
+                produto:schemas.Produto) -> None:
+        
         stmt = update(models.Produto).where(
             (models.Produto.id==idProduto) &
             (models.Produto.usuario_id==idUser)
@@ -56,6 +66,7 @@ class RepositorioProduto():
             disponivel = produto.disponivel,
             tamanhos   = produto.tamanhos
         );
+        
         self.session.execute(stmt);
         self.session.commit();
     

@@ -20,7 +20,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token");
 #-----------------------
 # FUNÇÕES()
 #-----------------------
-def obter_usuario_logado(token:str=Depends(oauth2_scheme),session:Session=Depends(get_db)) -> schemas.Usuario:
+def obter_usuario_logado(   token:str=Depends(oauth2_scheme),
+                            session:Session=Depends(get_db)
+                        ) -> schemas.Usuario:
+    
     exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Token inválido"

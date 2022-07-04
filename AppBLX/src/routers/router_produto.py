@@ -12,7 +12,7 @@ from src.infra.sqlalchemy.repositorios.produto import RepositorioProduto
 #-----------------------
 # CONSTANTES
 #-----------------------
-router = APIRouter();
+router   = APIRouter();
 NOME_TAG = "Produtos";
 #-----------------------
 # CLASSES
@@ -20,10 +20,10 @@ NOME_TAG = "Produtos";
 #-----------------------
 # FUNÇÕES()
 #-----------------------
-@router.get(   "/listar",
-                status_code=status.HTTP_200_OK,
-                response_model=List[schemas.ProdutoSimples],
-                tags=[NOME_TAG])
+@router.get("/listar",
+            status_code=status.HTTP_200_OK,
+            response_model=List[schemas.ProdutoSimples],
+            tags=[NOME_TAG])
 async def listar_produtos(  session:Session=Depends(get_db),
                             usuario:schemas.Usuario=Depends(
                             obter_usuario_logado)
@@ -32,20 +32,20 @@ async def listar_produtos(  session:Session=Depends(get_db),
     lista_produtos = RepositorioProduto(session).listar(usuario.id);
     return lista_produtos;
 
-@router.post(  "/inserir",
+@router.post(   "/inserir",
                 status_code=status.HTTP_201_CREATED,
-                response_model=schemas.ProdutoRetorno,
+                response_model=schemas.ProdutoSimples,
                 tags=[NOME_TAG])
 async def criar_produto(produto:schemas.ProdutoSimples,
                         session:Session=Depends(get_db),
                         usuario:schemas.Usuario=Depends(
                         obter_usuario_logado)):
 
-    RepositorioProduto(session).criar(
-        id=usuario.id,
+    retorno = RepositorioProduto(session).criarRetorno(
+        idUser=usuario.id,
         produto=produto
     );
-    return produto;
+    return retorno;
 
 @router.put(  "/editar/{id}",
             status_code=status.HTTP_200_OK,
@@ -76,7 +76,7 @@ async def editar_produto(   id:int,produto:schemas.Produto,
     
     return produto;
 
-@router.get(   "/pegar/{id}",
+@router.get("/pegar/{id}",
             status_code=status.HTTP_200_OK,
             response_model=schemas.ProdutoRetorno,
             tags=[NOME_TAG]
