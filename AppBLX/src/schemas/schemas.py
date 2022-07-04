@@ -28,6 +28,23 @@ class ProdutoRetorno(BaseModel):
     
     class Config:
         orm_mode = True;
+
+class PedidoRetorno(BaseModel):
+    """Pedido Retorno - Schema
+    
+    Neste schema nós criamos todos os dados 
+    necessários para a criação de um pedido
+    no nosso programa.
+    """
+    id         : Optional[int] = None;
+    quantidade : int;
+    entrega    : bool = False;
+    endereco   : str;
+    observacoes: Optional[str] = "Sem observações";
+    produto    : Optional[ProdutoRetorno] = None;
+    
+    class Config:
+        orm_mode = True;
 # **************
 # Schema Simples
 # **************

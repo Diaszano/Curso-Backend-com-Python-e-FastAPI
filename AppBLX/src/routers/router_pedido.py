@@ -20,24 +20,88 @@ NOME_TAG = "Pedidos";
 #-----------------------
 # FUNÇÕES()
 #-----------------------
-@router.get(   "/listar",
+@router.get("/compras",
             status_code=status.HTTP_200_OK,
-            response_model=List[schemas.Pedido],
-            tags=[NOME_TAG]
-        )
-async def listar_pedidos(   session:Session=Depends(get_db),
-                            usuario:schemas.Usuario=Depends(
-                            obter_usuario_logado)):
-    lista_pedidos = RepositorioPedido(session).listar();
+            response_model=List[schemas.PedidoSimples],
+            tags=[NOME_TAG])
+async def listar_meus_pedidos(  session:Session=Depends(get_db),
+                                usuario:schemas.Usuario=Depends(
+                                obter_usuario_logado)):
+    
+    lista_pedidos = RepositorioPedido(session).listarPedidos(
+        usuario.id
+    );
     return lista_pedidos;
 
+@router.get("/vendas",
+            status_code=status.HTTP_200_OK,
+            response_model=List[schemas.PedidoRetorno],
+            tags=[NOME_TAG])
+async def listar_minhas_vendas( session:Session=Depends(get_db),
+                                usuario:schemas.Usuario=Depends(
+                                obter_usuario_logado)):
+    
+    lista_pedidos = RepositorioPedido(session).listarVendas(
+        id=usuario.id
+    );
+    return lista_pedidos;
+
+@router.get("/compras/{id}",
+            status_code=status.HTTP_200_OK,
+            response_model=schemas.PedidoRetorno,
+            tags=[NOME_TAG])
+async def pegar_pedido( id:int,session:Session=Depends(get_db),
+                        usuario:schemas.Usuario=Depends(
+                        obter_usuario_logado)):
+    
+    compra = RepositorioPedido(session).pegarCompra(
+        idPedido=id,
+        idUser=usuario.id
+    );
+    
+    if(not compra):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Pedido com id={id} inexistente!"
+        );
+    
+    return compra;
+
+@router.get("/vendas/{id}",
+            status_code=status.HTTP_200_OK,
+            response_model=schemas.PedidoRetorno,
+            tags=[NOME_TAG])
+async def pegar_venda(  id:int,session:Session=Depends(get_db),
+                        usuario:schemas.Usuario=Depends(
+                        obter_usuario_logado)):
+    
+    venda = RepositorioPedido(session).pegarVenda(
+        idPedido=id,
+        idUser=usuario.id
+    );
+    
+    if(not venda):
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Pedido com id={id} inexistente!"
+        );
+    
+    return venda;
+
 @router.post(  "/inserir",
-            status_code=status.HTTP_201_CREATED,
-            response_model=schemas.Pedido,
-            tags=[NOME_TAG]
-        )
-async def criar_pedidos(pedido:schemas.Pedido,session:Session=Depends(get_db)):
-    pedido_criado = RepositorioPedido(session).criar(pedido);
+                status_code=status.HTTP_201_CREATED,
+                response_model=schemas.PedidoSimples,
+                tags=[NOME_TAG])
+async def fazer_pedido( pedido:schemas.Pedido,
+                        session:Session=Depends(get_db),
+                        usuario:schemas.Usuario=Depends(
+                        obter_usuario_logado)):
+    
+    pedido_criado = RepositorioPedido(session).criar(
+        pedido=pedido,
+        idUser=usuario.id
+    );
+    
     return pedido_criado;
 #-----------------------
 # Main()

@@ -26,13 +26,13 @@ class RepositorioPedido():
             return False;
         return True;
 
-    def criar(self, pedido: schemas.Pedido) -> models.Pedido:
+    def criar(self,idUser:int, pedido: schemas.Pedido) -> models.Pedido:
         session_pedido = models.Pedido(
             quantidade  = pedido.quantidade,
             entrega     = pedido.entrega,
             endereco    = pedido.endereco,
             observacoes = pedido.observacoes,
-            usuario_id  = pedido.usuario_id,
+            usuario_id  = idUser,
             produto_id  = pedido.produto_id
         );
 
@@ -41,9 +41,40 @@ class RepositorioPedido():
         self.session.refresh(session_pedido);
         return session_pedido;
     
-    def listar(self) -> List[models.Pedido]:
-        stmt = select(models.Pedido);
+    def listarPedidos(self,id:int) -> List[models.Pedido]:
+        stmt = select(models.Pedido).where(
+            models.Pedido.usuario_id==id
+        );
         pedidos = self.session.execute(stmt).scalars().all();
+        return pedidos;
+    
+    def listarVendas(self,id:int) -> List[models.Pedido]:
+        stmt = select(models.Pedido).join(
+            models.Produto
+        ).where(
+            (models.Pedido.produto_id == models.Produto.id) &
+            (models.Produto.usuario_id == id)
+        );
+        pedidos = self.session.execute(stmt).scalars().all();
+        return pedidos;
+    
+    def pegarCompra(self,idPedido:int,idUser:int) -> models.Pedido:
+        stmt = select(models.Pedido).where(
+            (models.Pedido.usuario_id == idUser) &
+            (models.Pedido.id == idPedido)
+        );
+        pedidos = self.session.execute(stmt).scalars().one_or_none();
+        return pedidos;
+    
+    def pegarVenda(self,idPedido:int,idUser:int) -> models.Pedido:
+        stmt = select(models.Pedido).join(
+            models.Produto
+        ).where(
+            (models.Pedido.produto_id == models.Produto.id) &
+            (models.Produto.usuario_id == idUser) &
+            (models.Pedido.id == idPedido)
+        );
+        pedidos = self.session.execute(stmt).scalars().one_or_none();
         return pedidos;
     
     def editar(self,id:int,pedido:schemas.Pedido) -> None:
