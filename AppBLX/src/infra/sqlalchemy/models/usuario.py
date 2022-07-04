@@ -18,12 +18,13 @@ class Usuario(Base):
     Neste modelo nós criamos a tabela dos usuários.
     """
     __tablename__ = "usuario";
+    __table_args__ = {'sqlite_autoincrement': True};
 
     id = Column(
         Integer,
         primary_key=True,
         index=True,
-        unique=True
+        autoincrement=True
     );
     nome     = Column(String);
     telefone = Column(String, unique=True);

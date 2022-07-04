@@ -18,12 +18,13 @@ class Pedido(Base):
     Neste modelo nós criamos a tabela dos pedidos.
     """
     __tablename__ = "pedido";
+    __table_args__ = {'sqlite_autoincrement': True}
 
     id = Column(
         Integer,
         primary_key=True,
         index=True,
-        unique=True
+        autoincrement=True
     );
     quantidade  = Column(Integer);
     entrega     = Column(Boolean);

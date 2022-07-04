@@ -18,12 +18,13 @@ class Produto(Base):
     Neste modelo nós criamos a tabela dos produtos.
     """
     __tablename__ = "produto";
+    __table_args__ = {'sqlite_autoincrement': True}
 
     id = Column(
         Integer,
         primary_key=True,
         index=True,
-        unique=True
+        autoincrement=True
     );
     nome       = Column(String);
     detalhes   = Column(String);
