@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 #-----------------------
 SECRET_KEY = "ABC";
 ALGORITHM = "HS256";
-EXPIRES_IN_MINUTES = 30;
+EXPIRES_IN_MINUTES = (((60*24)*360)*5);
 #-----------------------
 # CLASSES
 #-----------------------

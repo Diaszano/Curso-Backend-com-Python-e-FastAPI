@@ -11,6 +11,24 @@ from typing import Optional, List
 # CLASSES
 #-----------------------
 # **************
+# Schema Retorno
+# **************
+class ProdutoRetorno(BaseModel):
+    """Produto Retorno - Schema
+    
+    Neste schema nós criamos todos os dados 
+    necessários para a criação de um produto
+    no nosso programa.
+    """
+    nome      : str;
+    detalhes  : str;
+    preco     : float;
+    disponivel: bool = False;
+    tamanhos  : Optional[str] = "Não informado";
+    
+    class Config:
+        orm_mode = True;
+# **************
 # Schema Simples
 # **************
 class UsuarioSimples(BaseModel):

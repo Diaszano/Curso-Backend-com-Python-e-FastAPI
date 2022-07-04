@@ -22,7 +22,8 @@ class Pedido(Base):
     id = Column(
         Integer,
         primary_key=True,
-        index=True
+        index=True,
+        unique=True
     );
     quantidade  = Column(Integer);
     entrega     = Column(Boolean);

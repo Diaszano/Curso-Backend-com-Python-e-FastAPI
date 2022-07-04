@@ -3,9 +3,9 @@
 # BIBLIOTECAS
 #-----------------------
 from fastapi import FastAPI
+from src.routers import router_auth
 from src.routers import router_pedido
 from src.routers import router_produto
-from src.routers import router_auth
 from fastapi.middleware.cors import CORSMiddleware
 #-----------------------
 # FastApi
@@ -29,7 +29,7 @@ app.add_middleware(
 #-----------------------
 # Routers
 #-----------------------
-app.include_router(router_pedido.router);
-app.include_router(router_produto.router);
+app.include_router(router_pedido.router,prefix="/pedidos");
+app.include_router(router_produto.router,prefix="/produtos");
 app.include_router(router_auth.router,prefix="/auth");
 #-----------------------

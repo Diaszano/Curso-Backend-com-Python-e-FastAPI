@@ -22,7 +22,8 @@ class Usuario(Base):
     id = Column(
         Integer,
         primary_key=True,
-        index=True
+        index=True,
+        unique=True
     );
     nome     = Column(String);
     telefone = Column(String, unique=True);
