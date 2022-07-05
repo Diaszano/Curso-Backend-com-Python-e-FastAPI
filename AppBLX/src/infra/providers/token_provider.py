@@ -1,12 +1,27 @@
 #-----------------------
 # BIBLIOTECAS
 #-----------------------
+import os
+import configparser
 from jose import jwt
 from datetime import datetime, timedelta
 #-----------------------
 # CONSTANTES
 #-----------------------
-SECRET_KEY = "ABC";
+NOME_ARQUIVO = "file.ini";
+ARQUIVO_INI = (
+    f"{NOME_ARQUIVO}"
+);
+if(not os.path.isfile(ARQUIVO_INI)):
+    mensagem:str = (
+        f"O arquivo {NOME_ARQUIVO} "
+        f"não existe "
+    );
+    raise FileExistsError(mensagem);
+
+CONFIG = configparser.ConfigParser();
+CONFIG.read(ARQUIVO_INI);
+SECRET_KEY:str = CONFIG.get("token","SECRET_KEY");
 ALGORITHM = "HS256";
 EXPIRES_IN_MINUTES = (((60*24)*360)*5);
 #-----------------------
